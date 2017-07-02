@@ -1,0 +1,30 @@
+{
+  "name": "CardGames",
+  "version": "0.0.1",
+  "description": "This project involves creating simple card games.",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bannidhaliwal/CardGames.git"
+  },
+  "keywords": [
+    "CardGames"
+  ],
+  "author": "Banni Dhaliwal",
+  "bugs": {
+    "url": "https://github.com/bannidhaliwal/CardGames/issues"
+  },
+  "homepage": "https://github.com/bannidhaliwal/QSuper#readme",
+  "dependencies":{
+     "ejs":"^2.5.6",
+     "socket.io":"^1.7.3",
+     "express":"^4.15.0",
+     "mocha":"^3.2.0",
+     "chai":"^3.5.0",
+     "client-sessions":"^0.7.0"
+  },
+  "start":"node app.js"
+}
