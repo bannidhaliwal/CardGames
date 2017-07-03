@@ -7,6 +7,7 @@ var CreateDeck = require("../includes/CreateDeck.js");
 var Cards = require("../includes/Cards.js").Cards;
 var assert = require("assert");
 var chai = require("chai");
+var MagicGame = require("../includes/MagicGame.js").MagicGame;
 describe("ShuffleDeck", function() {
 	it("Should shuffle the deck",function(){
 		var array = [1,2,3];
@@ -58,5 +59,37 @@ describe("Cards Object",function(){
 	it("Should throw an error",function(){
 		chai.expect(Cards.bind(Cards,("Jack","Rubbish"))).to.throw("Invalid rank or suit")
 	});
-	
+	it("Should return Diamond",function(){
+		var card  = new Cards("Jack","Diamond");
+		assert("Diamond",card.returnCardSuit);
+	});
+	it("Should return the set height and width",function(){
+		var card = new Cards("Jack","Diamond");
+		card.setHeight(200);
+		assert(200 == card.getHeight());
+		card.setWidth(200);
+		assert(200 == card.getWidth());
+	});
+	it("Should return the set value of x and y",function(){
+		var card = new Cards("Jack","Diamond");
+		card.setX(200);
+		card.setY(200);
+		assert(200 == card.getX());
+		assert(200 == card.getY());
+	});
+	it("Should return the set deck",function(){
+		var card = new Cards("Jack","Diamond");
+		card.setDeck(1);
+		assert(1 == card.getDeck());
+	});
+});
+
+describe("Magic Game",function(){
+	it("Should pass.. Testing all functions existence",function(){
+		var magicGame = MagicGame;
+		assert(magicGame.PrepareDeck());
+		assert(magicGame.PullTwentySevenCards());
+		assert(magicGame.CreateThreeDecks());
+		assert(magicGame.SerializeData());
+	});
 });

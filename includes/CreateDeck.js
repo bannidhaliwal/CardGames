@@ -2,6 +2,8 @@
 *This file is going to serve the functions
 *to create the card deck.
 */
+
+var Card = require("./Cards.js").Cards;
 var cardRank = "Ace,King,Queen,Jack,Ten,Nine,Eight,Seven,Six,Five,Four,Three,Two";
 var cardSuit = "Diamond,Spade,Club,Heart";
 cardRank = cardRank.split(",");
@@ -32,7 +34,14 @@ function CreateCardDeck(string,cardRanks,cardSuits,counter,counter2,callback){
 *@author:-Navjot Dhaliwal
 */
 function InitializeDeck(callback){
-	CreateCardDeck("",cardRank,cardSuit,0,0,callback);
+	CreateCardDeck("",cardRank,cardSuit,0,0,(arrayArg)=>{
+		var finalArray = [];
+		for(var i = 0;i<arrayArg.length;i++){
+			var rankAndSuit = arrayArg[i].split(" ");
+			finalArray[i] = new Card(rankAndSuit[1],rankAndSuit[0]);
+		}
+		callback(finalArray);
+	});
 }
 /*
 *Shuffle the deck by using Knuth Shuffle.
@@ -56,6 +65,7 @@ function ShuffleDeck(deck,callback){
 *This function can be used to distribute the
 *cards to the various players.
 *@author:-Navjot Singh Dhaliwal
+*!DEPERECATED
 */
 function CreateSubDeck(deck,numberOfCardsInDeck,callback){
 	var array = [];
@@ -67,4 +77,4 @@ function CreateSubDeck(deck,numberOfCardsInDeck,callback){
 
 module.exports.InitializeDeck = InitializeDeck;
 module.exports.ShuffleDeck = ShuffleDeck;
-module.exports.CreateSubDeck = CreateSubDeck;
+module.exports.CreateSubDeck = CreateSubDeck;/*DEPERECATED*/
