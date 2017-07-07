@@ -29,7 +29,7 @@ function Cards(cardRankArg,cardSuitArg){
 	}
 	var cardRank = cardRankArg;
 	var cardSuit = cardSuitArg;
-	var id = cardRank[0]+cardSuit[0];
+	var id = cardSuit + " " + cardRank;
 	this.returnCardRank = function(){
 		return cardRank;
 	}
@@ -67,13 +67,16 @@ function Cards(cardRankArg,cardSuitArg){
 		return width;
 	}
 	this.setDeck = function(deckArg){
-		deck = deckArg;
+		deck = deckArg+"";
 	}
 	this.getDeck = function(){
 		return deck;
 	}
 	this.getId = function(){
 		return id;
+	}
+	this.getSerializedData = function(){
+		return id+","+deck;
 	}
 
 }

@@ -3,4 +3,18 @@
 	<script>
 		var io = io.connect();
 	</script>
+	<body>
+		<span id = "MagicGame">Magic Game</span>
+	</body>
+	<script>
+		document.getElementById("MagicGame").addEventListener('click',function(){
+			io.emit("Initiate Magic Game",{});
+			io.on("Magic Game Initialized",(data)=>{
+				console.log(data.data);
+			});
+			io.on("Redraw",(data)=>{
+				console.log(data);
+			});
+		});
+	</script>
 </html>

@@ -83,13 +83,79 @@ describe("Cards Object",function(){
 		assert(1 == card.getDeck());
 	});
 });
-
 describe("Magic Game",function(){
 	it("Should pass.. Testing all functions existence",function(){
 		var magicGame = MagicGame;
 		assert(magicGame.PrepareDeck());
 		assert(magicGame.PullTwentySevenCards());
 		assert(magicGame.CreateThreeDecks());
-		assert(magicGame.SerializeData());
+		assert(magicGame.SerializeData(function(data){}));
+	});
+	it("Should create a deck with 27 cards",function(){
+		var magicGame = MagicGame;
+		magicGame.PrepareDeck();
+		magicGame.PullTwentySevenCards();
+		magicGame.CreateThreeDecks();
+		assert(27 == magicGame.ReturnGameArrays().playAbleDeck.length);
+	});
+	it("Should have 9 cards in deck one",function(){
+		var magicGame = MagicGame;
+		magicGame.PrepareDeck();
+		magicGame.PullTwentySevenCards();
+		magicGame.CreateThreeDecks();
+		assert(9 == magicGame.ReturnGameArrays().deckOne.length);
+	});
+	it("Should have 9 cards in deck two",function(){
+		var magicGame = MagicGame;
+		magicGame.PrepareDeck();
+		magicGame.PullTwentySevenCards();
+		magicGame.CreateThreeDecks();
+		assert(9 == magicGame.ReturnGameArrays().deckTwo.length);
+	});
+	it("Should have 9 cards in deck three",function(){
+		var magicGame = MagicGame;
+		magicGame.PrepareDeck();
+		magicGame.PullTwentySevenCards();
+		magicGame.CreateThreeDecks();
+		assert(9 == magicGame.ReturnGameArrays().deckThree.length);
+	});
+	it("Should serialize the data",function(){
+		var magicGame = MagicGame;
+		magicGame.PrepareDeck();
+		magicGame.PullTwentySevenCards();
+		magicGame.CreateThreeDecks();
+		magicGame.SerializeData((serializedData)=>{
+			//console.log(serializedData);
+		});
+	});
+	it("Checking for duplicates",function(){
+		var magicGame = MagicGame;
+		magicGame.PrepareDeck();
+		magicGame.PullTwentySevenCards();
+		magicGame.CreateThreeDecks();
+		magicGame.SerializeData((serializedData)=>{
+			for(var i = 0;i<serializedData.serializedDataDeckOne.length;i++){
+				for(var j = 0;j<serializedData.serializedDataDeckTwo.length;j++){
+					assert(serializedData.serializedDataDeckOne[i] != serializedData.serializedDataDeckTwo[j]);
+				}
+			}
+			for(var i = 0;i<serializedData.serializedDataDeckTwo.length;i++){
+				for(var j = 0;j<serializedData.serializedDataDeckThree.length;j++){
+					assert(serializedData.serializedDataDeckTwo[i] != serializedData.serializedDataDeckThree[j]);
+				}
+			}
+			for(var i = 0;i<serializedData.serializedDataDeckThree.length;i++){
+				for(var j = 0;j<serializedData.serializedDataDeckOne.length;j++){
+					assert(serializedData.serializedDataDeckThree[i] != serializedData.serializedDataDeckOne[j]);
+				}
+			}
+		});
+	});
+	it("Should rearrange the cards",function(){
+		var magicGame = MagicGame;
+		magicGame.PrepareDeck();
+		magicGame.PullTwentySevenCards();
+		//magicGame.CreateThreeDecks();
+		//magicGame.RearrangeDecks();
 	});
 });
