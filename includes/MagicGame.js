@@ -11,51 +11,53 @@
 var CreateDeck = require("./CreateDeck.js");
 
 function MagicGame(){
-	this.wholeDeck = [];
-	this.playAbleDeck = [];
-	this.deckOne = [];
-	this.deckTwo = [];
-	this.deckThree = [];
-	this.decksPointer = [];
-	this.serializedData = [];
+	var wholeDeck = [];
+	var playAbleDeck = [];
+	var deckOne = [];
+	var deckTwo = [];
+	var deckThree = [];
+	var decksPointer = [];
+	var serializedData = [];
 
 	this.PrepareDeck = function(){
-		CreateDeck.InitializeDeck((arrayArg)=>{
-			this.wholeDeck = arrayArg;
+		CreateDeck.InitializeDeck((initializedDeck)=>{
+			wholeDeck = initializedDeck;
 		});
 		return true;//For testing purposes only..
 	}
 	this.PullTwentySevenCards = function(){
-		//TODO:- Delete those twenty seven cards from the original deck..(NOT NECESSARY)
-		CreateDeck.ShuffleDeck(this.wholeDeck,(shuffledDeck)=>{
-			this.playAbleDeck = [];
+		//TODO:- Delete those twenty seven cards from the original deck..(NOT NECESSARY?)
+		CreateDeck.ShuffleDeck(wholeDeck,(shuffledDeck)=>{
+			playAbleDeck = [];
 			for(var i = 0;i<27;i++){
-				this.playAbleDeck[i] = shuffledDeck[i];
+				playAbleDeck[i] = shuffledDeck[i];
 			}
 		});
 		return true;
 	}
 
 	this.CreateThreeDecks = function(){
-		this.deckOne = [];
-		this.deckTwo = [];
-		this.deckThree = [];
-		//Constants to assign to the cards
+		deckOne = [];
+		deckTwo = [];
+		deckThree = [];
+		//Assign 9 cards to each of the deck
+		for(var i = 0,j = 0;i<playAbleDeck.length;i+=3,j++){
+			deckOne[j] = playAbleDeck[i];
+			deckTwo[j] = playAbleDeck[i+1];
+			deckThree[j] = playAbleDeck[i+2];
+		}
+		SetDecks();
+		return true;
+	}
+	var SetDecks = function(){
 		var DECK_ONE = 1;
 		var DECK_TWO = 2;
 		var DECK_THREE = 3;
-		//Assign 9 cards to each of the deck
-		for(var i = 0,j = 0;i<this.playAbleDeck.length;i+=3,j++){
-			this.deckOne[j] = this.playAbleDeck[i];
-			this.deckOne[j].setDeck(DECK_ONE);
-
-			this.deckTwo[j] = this.playAbleDeck[i+1];
-			this.deckTwo[j].setDeck(DECK_TWO);
-
-			this.deckThree[j] = this.playAbleDeck[i+2];
-			this.deckThree[j].setDeck(DECK_THREE);
+		for(var i = 0; i<deckOne.length; i++){
+			deckOne[i].setDeck(DECK_ONE);
+			deckTwo[i].setDeck(DECK_TWO);
+			deckThree[i].setDeck(DECK_THREE);
 		}
-		return true;
 	}
 
 	this.SerializeData = function(callback){
@@ -63,9 +65,9 @@ function MagicGame(){
 		//for drawing on the client side..
 		serializedData = {serializedDataDeckOne:[],serializedDataDeckTwo:[],serializedDataDeckThree:[]};
 		for(var i = 0;i<9;i++){
-			serializedData.serializedDataDeckOne[i] = this.deckOne[i].getSerializedData();
-			serializedData.serializedDataDeckTwo[i] = this.deckTwo[i].getSerializedData();
-			serializedData.serializedDataDeckThree[i] = this.deckThree[i].getSerializedData();
+			serializedData.serializedDataDeckOne[i] = deckOne[i].getSerializedData();
+			serializedData.serializedDataDeckTwo[i] = deckTwo[i].getSerializedData();
+			serializedData.serializedDataDeckThree[i] = deckThree[i].getSerializedData();
 		}
 		callback(serializedData);
 		return true;
@@ -77,39 +79,46 @@ function MagicGame(){
 		var secondDeck = parseInt(deckWithUserSelectedCard);
 		var thirdDeck;
 		switch(secondDeck){
-			case 0:{
-				firstDeck = this.deckTwo;
-				secondDeck = this.deckOne;
-				thirdDeck = this.deckThree;
+			case 1:{
+				firstDeck =  deckTwo;
+				secondDeck =  deckOne;
+				thirdDeck =  deckThree;
 				break;
 			}
-			case 1:{
-				firstDeck = this.deckOne;
-				thirdDeck = this.deckThree;
-				secondDeck = this.deckTwo;
+			case 2:{
+				firstDeck =  deckOne;
+				thirdDeck =  deckThree;
+				secondDeck =  deckTwo;
+				break;
+			}
+			case 3:{
+				firstDeck =  deckOne;
+				thirdDeck =  deckTwo;
+				secondDeck =  deckThree;
 				break;
 			}
 			default:{
-				firstDeck = this.deckOne;
-				thirdDeck = this.deckTwo;
-				secondDeck = this.deckThree;
-				break;
+				throw new "There is no row "+secondDeck;
 			}
 		}
-		for(var i = 0,j = 0; i<27; i+=3,j++){
-			this.playAbleDeck[i] = firstDeck[j];
-			this.playAbleDeck[i+1] = secondDeck[j];
-			this.playAbleDeck[i+2] = thirdDeck[j];
+		for(var i = 0;i<firstDeck.length;i++){
+			playAbleDeck.push(firstDeck[i]);
+		}
+		for(var i = 0;i<firstDeck.length;i++){
+			playAbleDeck.push(secondDeck[i]);
+		}
+		for(var i = 0;i<firstDeck.length;i++){
+			playAbleDeck.push(thirdDeck[i]);
 		}
 		callback();
 	}
-
+	
 	/**
 	 * This function will rearrange decks.
 	 * @param {string} :The deck with user selected card.
 	 */
 	this.RearrangeDecks = function(deckWithUserSelectedCard,callback){
-		    this.playAbleDeck.length = 0;
+		    playAbleDeck = [];
 			this.RecreatePlayableDeck(deckWithUserSelectedCard,callback);
 	}
 }

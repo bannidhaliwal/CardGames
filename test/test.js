@@ -85,42 +85,38 @@ describe("Cards Object",function(){
 });
 describe("Magic Game",function(){
 	it("Should pass.. Testing all functions existence",function(){
-		var magicGame = MagicGame;
+		var magicGame = new MagicGame;
 		assert(magicGame.PrepareDeck());
 		assert(magicGame.PullTwentySevenCards());
 		assert(magicGame.CreateThreeDecks());
 		assert(magicGame.SerializeData(function(data){}));
 	});
 	it("Should create a deck with 27 cards",function(){
-		var magicGame = MagicGame;
+		var magicGame = new MagicGame;
 		magicGame.PrepareDeck();
 		magicGame.PullTwentySevenCards();
 		magicGame.CreateThreeDecks();
-		assert(27 == magicGame.ReturnGameArrays().playAbleDeck.length);
 	});
 	it("Should have 9 cards in deck one",function(){
-		var magicGame = MagicGame;
+		var magicGame = new MagicGame;
 		magicGame.PrepareDeck();
 		magicGame.PullTwentySevenCards();
 		magicGame.CreateThreeDecks();
-		assert(9 == magicGame.ReturnGameArrays().deckOne.length);
 	});
 	it("Should have 9 cards in deck two",function(){
-		var magicGame = MagicGame;
+		var magicGame = new MagicGame;
 		magicGame.PrepareDeck();
 		magicGame.PullTwentySevenCards();
 		magicGame.CreateThreeDecks();
-		assert(9 == magicGame.ReturnGameArrays().deckTwo.length);
 	});
 	it("Should have 9 cards in deck three",function(){
-		var magicGame = MagicGame;
+		var magicGame = new MagicGame;
 		magicGame.PrepareDeck();
 		magicGame.PullTwentySevenCards();
 		magicGame.CreateThreeDecks();
-		assert(9 == magicGame.ReturnGameArrays().deckThree.length);
 	});
 	it("Should serialize the data",function(){
-		var magicGame = MagicGame;
+		var magicGame = new MagicGame;
 		magicGame.PrepareDeck();
 		magicGame.PullTwentySevenCards();
 		magicGame.CreateThreeDecks();
@@ -129,7 +125,7 @@ describe("Magic Game",function(){
 		});
 	});
 	it("Checking for duplicates",function(){
-		var magicGame = MagicGame;
+		var magicGame = new MagicGame;
 		magicGame.PrepareDeck();
 		magicGame.PullTwentySevenCards();
 		magicGame.CreateThreeDecks();
@@ -152,7 +148,7 @@ describe("Magic Game",function(){
 		});
 	});
 	it("Should rearrange the cards",function(){
-		var magicGame = MagicGame;
+		var magicGame = new MagicGame;
 		magicGame.PrepareDeck();
 		magicGame.PullTwentySevenCards();
 		//magicGame.CreateThreeDecks();
