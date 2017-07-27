@@ -46,6 +46,7 @@ function MagicGame(){
 			deckTwo[j] = playAbleDeck[i+1];
 			deckThree[j] = playAbleDeck[i+2];
 		}
+		//Assign the decks to the distributed cards..
 		SetDecks();
 		return true;
 	}
